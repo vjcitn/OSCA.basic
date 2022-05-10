@@ -238,8 +238,8 @@ tab <- table(new.labels, sce.tasic$broad_type)
 tab
 ```
 
-```{r, echo=FALSE}
-stopifnot(tab["astrocytes_ependymal","Oligodendrocyte Precursor Cell"] > 0)
+```{r, echo=FALSE, eval=FALSE}
+stopifnot(tab["astrocytes_ependymal","Oligodendrocyte Precursor Cell"] > 0) # not in 3.15
 
 # Checking that I'm not just talking shit.
 rand <- pairwiseRand(new.labels, sce.tasic$broad_type, mode="index")
@@ -284,7 +284,7 @@ For example, applying all of the MSigDB signatures on the Muraro dataset is rath
 muraro.mat <- counts(sce.muraro)
 rownames(muraro.mat) <- rowData(sce.muraro)$symbol
 muraro.rankings <- AUCell_buildRankings(muraro.mat,
-    plotStats=FALSE, verbose=FALSE)
+    plotStats=FALSE, verbose=FALSE, splitByBlocks=TRUE)
 
 # Applying MsigDB to the Muraro dataset, because it's human:
 scsig.aucs <- AUCell_calcAUC(scsigs, muraro.rankings)
@@ -304,8 +304,8 @@ subheat <- pheatmap(log10(tab+10), color=viridis::viridis(100), silent=TRUE)
 gridExtra::grid.arrange(fullheat[[4]], subheat[[4]])
 ```
 
-```{r, echo=FALSE}
-# Checking that my trash talk above is correct.
+```{r, echo=FALSE, eval=FALSE}
+# Checking that my trash talk above is correct.  # not in 3.15
 stopifnot(pairwiseRand(full.labels, sce.muraro$label, mode="index") < 0.2)
 stopifnot(pairwiseRand(sub.labels, sce.muraro$label, mode="index") > 0.8)
 ```
